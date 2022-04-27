@@ -11,7 +11,7 @@
             <label class="custom-control-label" for="admin">Mode admin</label>
         </div>
     </div>
-    @if (PizzaToEdit != null)
+    @if (IsAdminMode && PizzaToEdit != null)
     {
         <EditForm OnValidSubmit="SubmitPizza" Model="PizzaToEdit">
             <DataAnnotationsValidator />
@@ -25,7 +25,8 @@
             <div class="form-row">
                 <div class="form-group" style="width:100%">
                     <label for="ingredients">Ingrédients (séparés par virgule):</label>
-                    <InputText class="form-control" id="ingredients" placeholder="Saisir les ingrédients" @bind-Value="PizzaToEditIngredientsString" />
+                    <InputText class="form-control" id="ingredients" placeholder="Saisir les ingrédients" @bind-Value="PizzaToEdit.IngredientsString" />
+                    <small><ValidationMessage For="() => this.PizzaToEdit.IngredientsString" /></small>
                 </div>
             </div>
             <div class="form-row">
@@ -55,10 +56,10 @@
                     <div class="col-2">
                         <h5 class="text-primary font-weight-bold">@pizza.Price.ToString("C", CultureInfo.CreateSpecificCulture("fr-FR"))</h5>
                         <div class="row p-2">
-                            <button class="col btn btn-success" @onclick="(e)=>AddToCart(pizza)"><i class="fa-solid fa-basket-shopping"></i>add</button>
+                            <button class="col btn btn-success" @onclick="(e)=>AddToCart(pizza)"><i class="bi bi-basket2-fill"></i></button>
                             @if (IsAdminMode)
                             {
-                                <button class="col btn text-primary border-primary" @onclick="(e) => EditPizza(pizza)">edit</button>
+                                <button class="col btn text-primary border-primary" @onclick="(e) => EditPizza(pizza)"><i class="bi bi-pencil-square"></i></button>
                             }
                         </div>
                     </div>
@@ -73,11 +74,11 @@
                     <span class="col-3 font-weight-bold">
                         @((pizzaDict.Key.Price*pizzaDict.Value).ToString("C", CultureInfo.CreateSpecificCulture("fr-FR")))
                     </span>
-                    <button class="col-1 btn text-danger font-weight-bold" @onclick="(e)=>RemoveFromCart(pizzaDict.Key)">x</button>
+                    <button class="col-1 btn text-danger font-weight-bold" @onclick="(e)=>RemoveFromCart(pizzaDict.Key)"><i class="bi bi-cart-dash"></i></button>
                 </div>
             }
             <h3 class="font-weight-bold">Total : @Total.ToString("C", CultureInfo.CreateSpecificCulture("fr-FR"))</h3>
-            <button class="btn btn-danger" @onclick="EmptyCart">Vider le panier</button>
+            <button class="btn btn-danger" @onclick="EmptyCart"><span class="bi bi-cart-x"></span>Vider le panier</button>
         </div>
     </div>
 </div>

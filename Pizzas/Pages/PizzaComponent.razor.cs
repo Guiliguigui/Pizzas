@@ -14,8 +14,7 @@ namespace Pizzas.Pages
         protected Dictionary<Pizza, int> Cart { get; set; } = new Dictionary<Pizza, int>();
         protected decimal Total => Cart.Sum(pizza => pizza.Key.Price * pizza.Value);
         protected List<Pizza> PizzaList { get; set; }
-        protected Pizza PizzaToEdit { get; set; } = null;
-        protected string PizzaToEditIngredientsString { get; set; } = "";
+        protected PizzaEditDTO PizzaToEdit { get; set; } = null;
         protected PizzaBase()
         {
             PizzaList = InitialPizzas.Pizzas;
@@ -41,14 +40,21 @@ namespace Pizzas.Pages
 
         protected void EditPizza(Pizza pizza)
         {
-            PizzaToEdit = pizza;
-            PizzaToEditIngredientsString = string.Join(", ", PizzaToEdit.Ingredients);
+            PizzaToEdit = new PizzaEditDTO()
+            {
+                Id = pizza.Id,
+                IngredientsString = string.Join(", ", pizza.Ingredients),
+                Name = pizza.Name,
+                Price = pizza.Price,
+            };
         }
         protected void SubmitPizza()
         {
-            PizzaToEdit.Ingredients = PizzaToEditIngredientsString.Split(", ");
+            var pizza = PizzaList.Find(pizza => pizza.Id == PizzaToEdit.Id);
+            pizza.Name = PizzaToEdit.Name;
+            pizza.Price = PizzaToEdit.Price;
+            pizza.Ingredients = PizzaToEdit.IngredientsString.Split(", ").Select(ingredient => ingredient.Trim()).ToArray();
             PizzaToEdit = null;
-
         }
     }
 }
