@@ -1,24 +1,27 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Pizzas.Data;
 using Pizzas.Models;
+using Pizzas.Services;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace Pizzas.Pages
 {
     public class PizzaBase : ComponentBase
     {
+        [Inject]
+        protected IPizzaService PizzaService { get; set; }
         protected bool IsAdminMode { get; set; } = false;
         protected Dictionary<Pizza, int> Cart { get; set; } = new Dictionary<Pizza, int>();
         protected decimal Total => Cart.Sum(pizza => pizza.Key.Price * pizza.Value);
         protected List<Pizza> PizzaList { get; set; }
         protected PizzaEditDTO PizzaToEdit { get; set; } = null;
-        protected PizzaBase()
+        protected override async void OnInitialized()
         {
-            PizzaList = InitialPizzas.Pizzas;
+            base.OnInitialized();
+            PizzaList = await PizzaService.GetPizzasAsync();
         }
+
         protected void AddToCart(Pizza pizza)
         {
             if (Cart.ContainsKey(pizza))
@@ -55,6 +58,7 @@ namespace Pizzas.Pages
             pizza.Price = PizzaToEdit.Price;
             pizza.Ingredients = PizzaToEdit.IngredientsString.Split(", ").Select(ingredient => ingredient.Trim()).ToArray();
             PizzaToEdit = null;
+            PizzaService.EditPizzaAsync(pizza);
         }
     }
 }
