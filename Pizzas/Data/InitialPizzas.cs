@@ -5,7 +5,7 @@ namespace Pizzas.Data
 {
     public static class InitialPizzas
     {
-        public static List<Pizza> Pizzas = new List<Pizza>()
+        public static readonly List<Pizza> Pizzas = new List<Pizza>()
         {
             new Pizza{ Id =1, Name ="Bacon", Price = 12, Ingredients = new[] { "bacon", "mozzarella", "champignon", "emmental" }, ImageName = "bacon.jpg"  },
             new Pizza{ Id =2, Name ="4 fromages", Price= 11, Ingredients = new[] { "cantal", "mozzarella", "fromage de chèvre", "gruyère" }, ImageName = "cheese.jpg"  },
