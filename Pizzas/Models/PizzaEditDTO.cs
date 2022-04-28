@@ -15,4 +15,3 @@ namespace Pizzas.Models
         public int Price { get; set; }
     }
 }
-

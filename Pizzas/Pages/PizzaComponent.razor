@@ -19,21 +19,21 @@
                 <div class="form-group" style="width:100%">
                     <label for="name">Nom:</label>
                     <InputText class="form-control" id="name" placeholder="Saisir le nom" @bind-Value="PizzaToEdit.Name" />
-                    <small><ValidationMessage For="() => this.PizzaToEdit.Name" /></small>
+                    <small><ValidationMessage For="() => PizzaToEdit.Name" /></small>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group" style="width:100%">
                     <label for="ingredients">Ingrédients (séparés par virgule):</label>
                     <InputText class="form-control" id="ingredients" placeholder="Saisir les ingrédients" @bind-Value="PizzaToEdit.IngredientsString" />
-                    <small><ValidationMessage For="() => this.PizzaToEdit.IngredientsString" /></small>
+                    <small><ValidationMessage For="() => PizzaToEdit.IngredientsString" /></small>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group" style="width:100%">
                     <label for="price">Prix (entier)</label>
                     <InputNumber class="form-control" id="price" placeholder="Saisir le prix" @bind-Value="PizzaToEdit.Price" />
-                    <small><ValidationMessage For="() => this.PizzaToEdit.Price" /></small>
+                    <small><ValidationMessage For="() => PizzaToEdit.Price" /></small>
                 </div>
             </div>
             <div class="form-row">
@@ -54,7 +54,7 @@
                         <small class="font-italic">@string.Join(", ", pizza.Ingredients)</small>
                     </div>
                     <div class="col-2">
-                        <h5 class="text-primary font-weight-bold">@pizza.Price.ToString("C", CultureInfo.CreateSpecificCulture("fr-FR"))</h5>
+                        <h5 class="text-primary font-weight-bold">@pizza.Price.ToString("C", CultureInfo.CreateSpecificCulture("fr-FR"))</h5>  
                         <div class="row p-2">
                             <button class="col btn btn-success" @onclick="(e)=>AddToCart(pizza)"><i class="bi bi-basket2-fill"></i></button>
                             @if (IsAdminMode)

@@ -53,10 +53,10 @@ namespace Pizzas.Pages
         }
         protected void SubmitPizza()
         {
-            var pizza = PizzaList.Find(pizza => pizza.Id == PizzaToEdit.Id);
+            Pizza pizza = PizzaList.Find(pizza => pizza.Id == PizzaToEdit.Id);
             pizza.Name = PizzaToEdit.Name;
             pizza.Price = PizzaToEdit.Price;
-            pizza.Ingredients = PizzaToEdit.IngredientsString.Split(", ").Select(ingredient => ingredient.Trim()).ToArray();
+            pizza.Ingredients = PizzaToEdit.IngredientsString.Split(",").Select(ingredient => ingredient.Trim()).ToArray();
             PizzaToEdit = null;
             PizzaService.EditPizzaAsync(pizza);
         }
